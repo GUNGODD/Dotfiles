@@ -1,7 +1,3 @@
-
---Treesitter 
-
--- Set Neovim options for tabs and indentation
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
@@ -9,10 +5,6 @@ vim.cmd("set shiftwidth=2")
 
 
 local  lazypath = vim.fn.stdpath("data") .. "lazy/lazy.nvim"
-
-
-
--- Check if the lazy.nvim directory exists, if not, clone it from GitHub
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -24,52 +16,22 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 
-
-
--- Prepend the lazy.nvim path to runtime path
 vim.opt.rtp:prepend(lazypath)
 
-
-
-
 local plugins = {
-  { 
-    "nvim-treesitter/nvim-treesitter", 
-    run = ":TSUpdate",
-    config = function()
-      require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "lua" , "typescript"}, -- add other languages here
-        highlight = {
-          enable = true,              -- false will disable the whole extension
-        },
-      }
-    end
-  },
-   
- -- colorscheme
-{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  
-  { 
--- init.lua:
-    {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6',
--- or                              , branch = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    }
 
-    }
+	
 
-
-  }
-
-  local opts = {}
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
 
 
+}
 
+local opts = {}
 require("lazy").setup(plugins, opts)
 require("catppuccin").setup()
-
+vim.cmd.colorscheme "catppuccin"
 
 
 
