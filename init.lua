@@ -22,43 +22,18 @@ end
 -- Prepend the lazy.nvim path to runtime path
 vim.opt.rtp:prepend(lazypath)
 
--- Define plugins and options for lazy.nvim setup
+-- Define plugins
 local plugins = {
-  { 
-    "nvim-treesitter/nvim-treesitter", 
-    run = ":TSUpdate",
-    config = function()
-      require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "lua" , "typescript"}, -- add other languages here
-        highlight = {
-          enable = true,              -- false will disable the whole extension
-        },
-      }
-    end
-  },
-
-   
- -- colorscheme
-{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  
-  { 
--- init.lua:
-    {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6',
--- or                              , branch = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    }
-
-    }
-
-
-  } 
-
+  require('plugins.telescope') -- Load Telescope configuration
+  -- Add other plugins here
+}
 
 local opts = {}
 
 -- Setup lazy.nvim with the defined plugins and options
 require("lazy").setup(plugins, opts)
-require("catppuccin").setup()
---for seting up the command palate  using vim.cmd 
- vim.cmd.colorscheme "catppuccin"
+
+-- Key mappings
+vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
+
