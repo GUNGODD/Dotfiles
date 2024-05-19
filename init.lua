@@ -1,12 +1,19 @@
--- Example using a list of specs with the default options
-vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
-vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
+
+--Treesitter 
+
+-- Set Neovim options for tabs and indentation
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=2")
+vim.cmd("set softtabstop=2")
+vim.cmd("set shiftwidth=2")
+
+
+local  lazypath = vim.fn.stdpath("data") .. "lazy/lazy.nvim"
 
 
 
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+-- Check if the lazy.nvim directory exists, if not, clone it from GitHub
+if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -16,10 +23,53 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     lazypath,
   })
 end
+
+
+
+-- Prepend the lazy.nvim path to runtime path
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  "folke/which-key.nvim",
-  { "folke/neoconf.nvim", cmd = "Neoconf" },
-  "folke/neodev.nvim",
-})
+
+
+
+local plugins = {
+  { 
+    "nvim-treesitter/nvim-treesitter", 
+    run = ":TSUpdate",
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        ensure_installed = { "lua" , "typescript"}, -- add other languages here
+        highlight = {
+          enable = true,              -- false will disable the whole extension
+        },
+      }
+    end
+  },
+   
+ -- colorscheme
+{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  
+  { 
+-- init.lua:
+    {
+    'nvim-telescope/telescope.nvim', tag = '0.1.6',
+-- or                              , branch = '0.1.x',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    }
+
+    }
+
+
+  }
+
+  local opts = {}
+
+
+
+
+require("lazy").setup(plugins, opts)
+require("catppuccin").setup()
+
+
+
+
