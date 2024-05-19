@@ -29,16 +29,24 @@ local plugins = {
     run = ":TSUpdate",
     config = function()
       require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "lua" }, -- add other languages here
+        ensure_installed = { "lua" , "typescript"}, -- add other languages here
         highlight = {
           enable = true,              -- false will disable the whole extension
         },
       }
     end
   },
+
+  { 
+
+{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+  }
 }
 
 local opts = {}
 
 -- Setup lazy.nvim with the defined plugins and options
 require("lazy").setup(plugins, opts)
+require("catppuccin").setup()
+--for seting up the command palate  using vim.cmd 
+ vim.cmd.colorscheme "catppuccin"
