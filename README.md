@@ -1,4 +1,4 @@
-# Neovim.config
+# dot files for linux distros
 ## My Neovim Configuration Journey 🚀
 
 In this repo, I took a bold step and created my own Neovim config file without following any YouTube tutorials! 🚀
